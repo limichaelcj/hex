@@ -1,0 +1,8 @@
+// sass mixins, functions, logic
+
+@mixin flex($dir: row, $justify: flex-start, $align: flex-start){
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $justify;
+  align-items: $align;
+}

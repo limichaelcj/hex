@@ -1,0 +1,63 @@
+#!/bin/bash
+
+### init variables
+#text colors
+TC_N='\e[0m'
+TC_ROY='\e[0;35m'
+TC_NAV='\e[0;34m'
+TC_GRN='\e[1;32m'
+
+#paths
+INSTALLER="$PWD/$0"
+HEX_SRC="${INSTALLER/install/dist/hex}"
+HEX_TRG="/usr/bin/hex"
+FILES_SRC="${INSTALLER/install/dist/hex_files}"
+FILES_TRG="~/.hex_files"
+
+### main faunctions
+main(){
+  echo -e "${TC_ROY}Installing @hex...$TC_N"
+  #install main script
+  install_hex
+  #install files
+  install_hex_files
+  #finish installation
+  installation_complete
+}
+
+install_hex() {
+  #check if hex already exists
+  if [ -e "$HEX_TRG" ]; then
+    confirm "${TC_NAV}$HEX_TRG${TC_N} already exists. Overwrite?"
+  fi
+  sudo cp $HEX_SRC $HEX_TRG
+  echo -e "> ${TC_GRN}@hex$TC_N written to ${TC_NAV}/usr/bin$TC_N"
+}
+
+install_hex_files() {
+  rm -rf ~/.hex_files
+  cp -r $FILES_SRC ~/.hex_files
+  echo -e "> ${TC_GRN}hex_files$TC_N written to ${TC_NAV}~/.hex_files$TC_N"
+}
+
+installation_complete() {
+  echo "> Installation complete."
+}
+
+### helper functions
+confirm() {
+  echo -ne "$1 [y/n]: "
+  read yn
+  if [[ $yn != [Yy] ]]; then
+    abort
+  fi
+}
+
+abort() {
+  echo "Installation aborted."
+  exit
+}
+
+#CALL MAIN
+
+main "$@"

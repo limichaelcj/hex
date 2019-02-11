@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo ''
+echo "  Usage: hex generate [operation] <options>"
+echo ''
+echo "  Operations:"
+echo ''
+echo "    html-compatible <path>   generate basic html compatibility template"
+echo "    scss-tree <path>         generate .scss file tree template"
+echo ''

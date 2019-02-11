@@ -1,0 +1,99 @@
+#!/bin/bash
+
+# import typography variables
+source ~/.hex_files/.lib/typography
+# import terminal helper functions
+source ~/.hex_files/.lib/terminal_helper
+# import terminal io functions
+source ~/.hex_files/.lib/terminal_io
+
+main() {
+  # if no arguments...
+  if [ $# -eq 0 ]; then
+    script_info
+    echo "Type 'hex manual' for help"
+    terminate
+  fi
+  # $1= hex command
+  case $1 in
+    manual|man|help)
+      print_manual
+      ;;
+    sysinfo|sys)
+      sysinfo
+      ;;
+    reference|ref)
+      # $2= reference operation
+      reference $2
+      ;;
+    generate|gen|g)
+      # $2= generate operation
+      # $3= target filepath to generate in
+      generate $2 $3
+      ;;
+    *)
+      terminate "Operation not found. Type 'hex manual' for help"
+      ;;
+  esac
+}
+
+script_info() {
+  echo -e "${TC_ROY}HEX:${TF_N} Custom scripts by mcli830"
+}
+
+print_manual() {
+  source ~/.hex_files/.ref/man/hex
+}
+
+sysinfo() {
+  local title="System Information for ${TC_ROY}@$HOSTNAME${TC_D}"
+  local now=$(date +"%x %r %Z")
+  local time_stamp="Timestamp: ${TC_GLD}$now${TC_D} by ${TC_CYN}$USER${TC_D}"
+  echo -e "$title"
+  echo -e "$time_stamp"
+}
+
+reference() {
+  if [ -z "$1" ]; then
+    terminate "No reference given"
+  fi
+  case $1 in
+    colors|color)
+      source ~/.hex_files/.ref/colors
+      ;;
+    *)
+      terminate "Invalid reference: $1"
+  esac
+}
+
+generate() {
+  local operation="$1"
+  local user_path="$2"
+  if [ -z "$operation" ]; then
+    source ~/.hex_files/.ref/man/generate
+  else
+    if [ ! -d ~/.hex_files/generate/$operation ]; then
+      terminate "Invalid operation: $operation"
+    fi
+    if [ -z $user_path ]; then
+      local abs_path="$PWD"
+      local rel_path='.'
+    else
+      local abs_path="$PWD/$user_path"
+      local rel_path="$user_path"
+    fi
+    local display_path="${TC_NAV}$(home_tilde $abs_path)${TF_N}"
+    # abs_path= absolute path
+    # rel_path= relative path from current working directory -- will be used to generate files
+    # display_path= path to display when displaying info to user
+
+    # confirmation
+    confirm_strict "Some files in $display_path may be overwritten. Continue?"
+
+    echo -e "Generating $operation files..."
+    cp -a ~/.hex_files/generate/$operation/. $rel_path/
+    echo -e "> ${TC_BGRN}index.html${TF_N} written to $display_path"
+  fi
+}
+
+main "$@"

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+echo ''
+echo -e "  ${BG_D}BG_D    Default"
+echo -e "  ${BG_DRK}BG_DRK  Dark   ${BG_D}  ${BG_GRY}BG_GRY  Gray   ${TF_N}"
+echo -e "  ${BG_MRN}BG_MRN  Maroon ${BG_D}  ${BG_RED}BG_RED  Red    ${TF_N}"
+echo -e "  ${BG_SAG}BG_SAG  Sage   ${BG_D}  ${BG_GRN}BG_GRN  Green  ${TF_N}"
+echo -e "  ${BG_GLD}BG_GLD  Gold   ${BG_D}  ${BG_YLW}BG_YLW  Yellow ${TF_N}"
+echo -e "  ${BG_NAV}BG_NAV  Navy   ${BG_D}  ${BG_BLU}BG_BLU  Blue   ${TF_N}"
+echo -e "  ${BG_ROY}BG_ROY  Royal  ${BG_D}  ${BG_PRP}BG_PRP  Purple ${TF_N}"
+echo -e "  ${BG_TEA}BG_TEA  Teal   ${BG_D}  ${BG_CYN}BG_CYN  Cyan   ${TF_N}"
+echo -e "  ${TC_BLK}${BG_SLV}BG_SLV  Silver ${BG_D}  ${BG_WHT}BG_WHT  White  ${TF_N}"
+echo ''
+echo -e "  ${TC_D}TC_D    Default"
+echo -e "  ${TC_MRN}TC_MRN  Maroon   ${TC_RED}TC_RED  Red      ${TC_BRED}TC_BRED  Bold Red${TF_N}"
+echo -e "  ${TC_SAG}TC_SAG  Sage     ${TC_GRN}TC_GRN  Green    ${TC_BGRN}TC_BGRN  Bold Green${TF_N}"
+echo -e "  ${TC_GLD}TC_GLD  Gold     ${TC_YLW}TC_YLW  Yellow   ${TC_BYEL}TC_BYEL  Bold Yellow${TF_N}"
+echo -e "  ${TC_NAV}TC_NAV  Navy     ${TC_BLU}TC_BLU  Blue     ${TC_BBLU}TC_BBLU  Bold Blue${TF_N}"
+echo -e "  ${TC_ROY}TC_ROY  Royal    ${TC_PRP}TC_PRP  Purple   ${TC_BPRP}TC_BPRP  Bold Purple${TF_N}"
+echo -e "  ${TC_TEA}TC_TEA  Teal     ${TC_CYN}TC_CYN  Cyan     ${TC_BCYN}TC_BCYN  Bold Cyan${TF_N}"
+echo -e "  ${TC_WHT}TC_WHT  White    ${TC_SLV}TC_SLV  Silver   ${TC_BSLV}TC_BSLV  Bold Silver${TF_N}"
+echo -e "  ${TC_BLK}TC_BLK  Black    ${TC_GRY}TC_GRY  Gray     ${TC_BGRY}TC_BGRY  Bold Gray${TF_N}"
+echo ''
+echo -e "  ${TF_DIM}TF_N     Normal Formatting${TF_N}"
+echo ''

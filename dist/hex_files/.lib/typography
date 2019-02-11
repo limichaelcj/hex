@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Type Formatting
+TF_N='\e[0m'   #normal/reset all
+
+TF_BLD='\e[1m' #bold
+TF_DIM='\e[2m' #dim
+TF_UND='\e[4m' #underline
+TF_BLI='\e[5m' #blink
+TF_INV='\e[7m' #inverted colors
+TF_HID='\e[8m' #hidden
+
+# TF_XBLD='\e[21m' #cancel bold
+# TF_XDIM='\e[22m' #cancel dim
+# TF_XULN='\e[24m' #cancel underline
+# TF_XBLI='\e[25m' #cancel blink
+# TF_XINV='\e[27m' #cancel inverted colors
+# TF_XHID='\e[28m' #cancel hidden
+
+# Type Colors
+TC_D='\e[39m'   #default
+TC_BLK='\e[30m' #black
+TC_GRY='\e[90m' #gray
+TC_RED='\e[91m' #red
+TC_MRN='\e[31m' #maroon
+TC_GRN='\e[92m' #green
+TC_SAG='\e[32m' #sage
+TC_YLW='\e[93m' #yellow
+TC_GLD='\e[33m' #gold
+TC_NAV='\e[34m' #navy
+TC_BLU='\e[94m' #blue
+TC_ROY='\e[35m' #royal
+TC_PRP='\e[95m' #purple
+TC_CYN='\e[96m' #cyan
+TC_TEA='\e[36m' #turquoise
+TC_WHT='\e[97m' #white
+TC_SLV='\e[37m' #silver
+
+TC_BGRY='\e[1;30m' #bold gray
+TC_BRED='\e[1;31m' #bold red
+TC_BGRN='\e[1;32m' #bold green
+TC_BYEL='\e[1;33m' #bold yellow
+TC_BBLU='\e[1;34m' #bold blue
+TC_BPRP='\e[1;35m' #bold purple
+TC_BCYN='\e[1;36m' #bold cyan
+TC_BSLV='\e[1;37m' #bold silver
+
+# Background Colors
+BG_D='\e[49m'    #default
+BG_DRK='\e[40m'  #dark
+BG_MRN='\e[41m'  #maroon
+BG_SAG='\e[42m'  #sage
+BG_GLD='\e[43m'  #gold
+BG_NAV='\e[44m'  #navy
+BG_ROY='\e[45m'  #royal
+BG_TEA='\e[46m'  #teal
+BG_SLV='\e[47m'  #silver
+BG_GRY='\e[100m' #gray
+BG_RED='\e[101m' #red
+BG_GRN='\e[102m' #green
+BG_YLW='\e[103m' #yellow
+BG_BLU='\e[104m' #blue
+BG_PRP='\e[105m' #purple
+BG_CYN='\e[106m' #cyan
+BG_WHT='\e[107m' #white

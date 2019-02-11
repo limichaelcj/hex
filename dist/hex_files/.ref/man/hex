@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo ''
+echo "  Usage: hex [command] <options>"
+echo ''
+echo "  Commands:"
+echo ''
+echo "   man,help | manual                        print script manual"
+echo "        sys | sysinfo                       display system info"
+echo "      g,gen | generate [operation] <path>   generate file tree templates"
+echo ''

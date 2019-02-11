@@ -1,0 +1,49 @@
+#!/bin/bash
+
+### runtime
+
+abort() {
+  echo "Operation aborted."
+  exit
+}
+
+terminate() {
+  if ! [ -z "$1" ]; then
+    echo "$1"
+  fi
+  exit
+}
+
+### data
+
+is_int?() {
+  local regex='^-?[0-9]+$'
+  if [[ $1 =~ $regex ]]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+fill() {
+  # $1= character to fill with
+  # $2= length of filled string
+  # local default_char=' '
+  # local default_len=2
+  local char="${1:- }"
+  local len=${2:-2}
+  if [ $len -lt 2 ]; then
+    len=2
+  fi
+  local out=''
+  for ((n=0;n<$len;n++)); do
+    out+="$char"
+  done
+  echo $out
+}
+
+home_tilde() {
+  # $1= path
+  local home="/home/$USER"
+  echo "${1/$home/'~'}"
+}

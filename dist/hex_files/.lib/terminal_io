@@ -1,0 +1,40 @@
+#!/bin/bash
+
+### interface
+
+confirm() {
+  # $1= confirmation message
+  if [ -z "$1" ]; then
+    local message="Confirm?"
+  else
+    local message="$1"
+  fi
+  echo -ne "$message [y/n]: "
+  read yn
+  if [[ $yn != [Yy] ]]; then
+    abort
+  fi
+  return 1
+}
+
+confirm_strict() {
+  if [ -z "$1" ]; then
+    local message="Confirm?"
+  else
+    local message="$1"
+  fi
+  while [[ $yn != [YyNn] ]]; do
+    echo -ne "$1 [y/n]: "
+    read yn
+  done
+  if [[ $yn = [Nn] ]]; then
+    abort
+  fi
+  return 1
+}
+
+### print styles
+
+# print_table(){
+#   # $1= array
+# }
