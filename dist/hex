@@ -35,6 +35,7 @@ main() {
       # $2= icon name
       # $3= target directory
       favicon $2 $3
+      ;;
     *)
       terminate "Operation not found. Type 'hex manual' for help"
       ;;
@@ -103,7 +104,7 @@ generate() {
 favicon() {
   local icon="$1"
   local user_path="$2"
-  if [-z "$user_path" ]; then
+  if [ -z "$icon" ]; then
     source ~/.hex_files/.ref/man/favicon
   else
     if [ ! -f ~/.hex_files/favicon/${icon}.ico ]; then
@@ -118,7 +119,7 @@ favicon() {
     fi
     local display_path="${TC_NAV}$(home_tilde $abs_path)${TF_N}"
     echo -ne "Generating favicon ${TC_BGRN}$icon${TF_N} in $display_path..."
-    cp -a ~/.hex_files/favicon/${icon}.ico $rel_path/favicon.icon
+    cp -a ~/.hex_files/favicon/${icon}.ico $rel_path/favicon.ico
     echo "Done"
   fi
 }

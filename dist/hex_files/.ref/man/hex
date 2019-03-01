@@ -8,5 +8,5 @@ echo ''
 echo "   man,help | manual                        print script manual"
 echo "        sys | sysinfo                       display system info"
 echo "      g,gen | generate [operation] <path>   generate file tree templates"
-echo "        fav | favicon [icon]                generate favicon"
+echo "       icon | favicon [icon]                generate favicon"
 echo ''
