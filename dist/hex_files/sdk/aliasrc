@@ -9,7 +9,7 @@ alias rserve='google-chrome localhost:8000 & ruby -run -e httpd . -p 8000'
 # Or python -m SimpleHTTPServer :)
 
 # Edit aliases
-alias aliases='vim ~/.aliases'
+alias aliasrc='vim ~/.aliasrc'
 
 # Quick navigate directories
 alias up='cd ..'
