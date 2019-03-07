@@ -14,7 +14,7 @@ echo ''
 echo -e "  ${TC_D}TC_D    Default"
 echo -e "  ${TC_MRN}TC_MRN  Maroon   ${TC_RED}TC_RED  Red      ${TC_BRED}TC_BRED  Bold Red${TF_N}"
 echo -e "  ${TC_SAG}TC_SAG  Sage     ${TC_GRN}TC_GRN  Green    ${TC_BGRN}TC_BGRN  Bold Green${TF_N}"
-echo -e "  ${TC_GLD}TC_GLD  Gold     ${TC_YLW}TC_YLW  Yellow   ${TC_BYEL}TC_BYEL  Bold Yellow${TF_N}"
+echo -e "  ${TC_GLD}TC_GLD  Gold     ${TC_YLW}TC_YLW  Yellow   ${TC_BYLW}TC_BYLW  Bold Yellow${TF_N}"
 echo -e "  ${TC_NAV}TC_NAV  Navy     ${TC_BLU}TC_BLU  Blue     ${TC_BBLU}TC_BBLU  Bold Blue${TF_N}"
 echo -e "  ${TC_ROY}TC_ROY  Royal    ${TC_PRP}TC_PRP  Purple   ${TC_BPRP}TC_BPRP  Bold Purple${TF_N}"
 echo -e "  ${TC_TEA}TC_TEA  Teal     ${TC_CYN}TC_CYN  Cyan     ${TC_BCYN}TC_BCYN  Bold Cyan${TF_N}"

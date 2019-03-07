@@ -26,6 +26,10 @@ main() {
       # $2= reference operation
       reference $2
       ;;
+    sdk)
+      # $2= sdk option
+      sdk $2
+      ;;
     generate|gen|g)
       # $2= generate operation
       # $3= target filepath to generate in
@@ -69,6 +73,22 @@ reference() {
     *)
       terminate "Invalid reference: $1"
   esac
+}
+
+sdk() {
+  local install="$1"
+  if [ -z "$install" ]; then
+    source ~/.hex_files/.ref/man/sdk
+  else
+    case $install in
+      alias)
+        sdk-alias
+        ;;
+      *)
+        source ~/.hex_files/.ref/man/sdk
+        ;;
+    esac
+  fi
 }
 
 generate() {
@@ -118,10 +138,25 @@ favicon() {
       local rel_path="$user_path"
     fi
     local display_path="${TC_NAV}$(home_tilde $abs_path)${TF_N}"
-    echo -ne "Generating favicon ${TC_BGRN}$icon${TF_N} in $display_path..."
+    echo -e "Generating favicon: ${TC_SAG}$icon${TF_N}"
     cp -a ~/.hex_files/favicon/${icon}.ico $rel_path/favicon.ico
-    echo "Done"
+    echo -e "> ${TC_BGRN}favicon.ico${TF_N} written to $display_path"
   fi
+}
+
+# sub-functions
+sdk-alias(){
+  if [ ! -f ~/.aliasrc ]; then
+    confirm_strict "${TC_NAV}~/.aliasrc${TF_N} will be overwritten. Continue?"
+  fi
+  cp -a ~/.hex_files/sdk/aliasrc ~/.aliasrc
+  echo -e "> ${TC_BGRN}.aliasrc${TF_N} written to ${TC_NAV}home${TF_N}"
+  echo -e 'Installation follow-up instructions:'
+  echo -e "1) Open your terminal's .rc file (e.g. ${TC_NAV}.bashrc${TF_N}, ${TC_NAV}.zshrc${TF_N}, etc.)."
+  echo -e "2) Add the following line of bash code unless already there:"
+  echo -e "   --> ${TC_YLW}[[ -f \"$HOME/.aliasrc\" ]] && source \"$HOME/.aliasrc\"${TF_N}"
+  echo -e "3) Save .rc file and restart terminal."
+  echo -e "   --  Or run the .rc file with: ${TC_CYN}. ~/.bashrc${TF_N}"
 }
 
 main "$@"
