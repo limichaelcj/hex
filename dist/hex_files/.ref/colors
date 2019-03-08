@@ -18,7 +18,7 @@ echo -e "  ${TC_GLD}TC_GLD  Gold     ${TC_YLW}TC_YLW  Yellow   ${TC_BYLW}TC_BYLW
 echo -e "  ${TC_NAV}TC_NAV  Navy     ${TC_BLU}TC_BLU  Blue     ${TC_BBLU}TC_BBLU  Bold Blue${TF_N}"
 echo -e "  ${TC_ROY}TC_ROY  Royal    ${TC_PRP}TC_PRP  Purple   ${TC_BPRP}TC_BPRP  Bold Purple${TF_N}"
 echo -e "  ${TC_TEA}TC_TEA  Teal     ${TC_CYN}TC_CYN  Cyan     ${TC_BCYN}TC_BCYN  Bold Cyan${TF_N}"
-echo -e "  ${TC_WHT}TC_WHT  White    ${TC_SLV}TC_SLV  Silver   ${TC_BSLV}TC_BSLV  Bold Silver${TF_N}"
+echo -e "  ${TC_SLV}TC_SLV  Silver   ${TC_WHT}TC_WHT  White    ${TC_BWHT}TC_BWHT  Bold White${TF_N}"
 echo -e "  ${TC_BLK}TC_BLK  Black    ${TC_GRY}TC_GRY  Gray     ${TC_BGRY}TC_BGRY  Bold Gray${TF_N}"
 echo ''
 echo -e "  ${TF_DIM}TF_N     Normal Formatting${TF_N}"

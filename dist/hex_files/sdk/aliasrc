@@ -4,9 +4,8 @@ alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 alias speedtest="wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
 
 # Quickly serve the current directory as HTTP
-alias hserve='google-chrome localhost:3000 & http-server -c-1 -p 3000'
-alias rserve='google-chrome localhost:8000 & ruby -run -e httpd . -p 8000'
-# Or python -m SimpleHTTPServer :)
+alias hserve='http-server -c-1 -p 3000'
+alias rserve='ruby -run -e httpd . -p 8000' # Or python -m SimpleHTTPServer :)
 
 # Edit aliases
 alias aliasrc='vim ~/.aliasrc'
@@ -24,10 +23,8 @@ alias trash='cd ~/.local/share/Trash/files'
 #git
 alias gc='git commit -m'
 alias gcv='git commit -v'
-alias gpmaster='git push origin master'
-alias gpdev='git push origin development'
-alias gcomaster='git checkout master'
-alias gcodev='git checkout development'
+alias push='git push origin'
+alias pull='git pull origin'
 
 # npm
 alias publish='npm publish --access=public'

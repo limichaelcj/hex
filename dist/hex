@@ -84,6 +84,9 @@ sdk() {
       alias)
         sdk-alias
         ;;
+      webpack|webpack)
+        sdk-webpack
+        ;;
       *)
         source ~/.hex_files/.ref/man/sdk
         ;;
@@ -146,17 +149,27 @@ favicon() {
 
 # sub-functions
 sdk-alias(){
-  if [ ! -f ~/.aliasrc ]; then
+  if [ -f ~/.aliasrc ]; then
     confirm_strict "${TC_NAV}~/.aliasrc${TF_N} will be overwritten. Continue?"
   fi
   cp -a ~/.hex_files/sdk/aliasrc ~/.aliasrc
   echo -e "> ${TC_BGRN}.aliasrc${TF_N} written to ${TC_NAV}home${TF_N}"
   echo -e 'Installation follow-up instructions:'
-  echo -e "1) Open your terminal's .rc file (e.g. ${TC_NAV}.bashrc${TF_N}, ${TC_NAV}.zshrc${TF_N}, etc.)."
-  echo -e "2) Add the following line of bash code unless already there:"
+  echo -e "${TC_BWHT}1)${TF_N} Open your terminal's .rc file (e.g. ${TC_NAV}.bashrc${TF_N}, ${TC_NAV}.zshrc${TF_N}, etc.)."
+  echo -e "${TC_BWHT}2)${TF_N} Add the following line of bash code unless already there:"
   echo -e "   --> ${TC_YLW}[[ -f \"$HOME/.aliasrc\" ]] && source \"$HOME/.aliasrc\"${TF_N}"
-  echo -e "3) Save .rc file and restart terminal."
-  echo -e "   --  Or run the .rc file with: ${TC_CYN}. ~/.bashrc${TF_N}"
+  echo -e "${TC_BWHT}3)${TF_N} Save .rc file and restart terminal."
+  echo -e "   --  Or run the .rc file with ${TC_CYN}${BG_DRK} . ~/.bashrc ${TF_N}"
+}
+
+sdk-webpack(){
+  if [ ! -f package.json ]; then
+    terminate "${TC_BYLW}ABORT:${TF_N} npm package not found. Run ${TC_CYN}${BG_DRK} npm init ${TF_N} to create an npm package in this directory."
+  fi
+  confirm_strict "${TC_ROY}@hex${TF_N}:sdk:webpack${TF_N} will install multiple npm packages. Continue?"
+  npm install -D webpack webpack-cli @babel/core @babel/preset-env babel-loader css-loader sass-loader node-sass style-loader extract-loader file-loader extract-text-webpack-plugin
+  cp -a ~/.hex_files/sdk/webpack-template webpack.config.js
+  echo -e "> ${TC_BGRN}webpack.config.js${TF_N} written to ${TC_NAV}$PWD (here)${TF_N}"
 }
 
 main "$@"
