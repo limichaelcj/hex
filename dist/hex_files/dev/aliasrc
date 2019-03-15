@@ -10,6 +10,10 @@ alias rserve='ruby -run -e httpd . -p 8000' # Or python -m SimpleHTTPServer :)
 # Edit aliases
 alias aliasrc='vim ~/.aliasrc'
 
+# System control
+alias standby='systemctl suspend'
+alias set-local-time='timedatectl set-local-rtc 1'
+
 # Quick navigate directories
 alias up='cd ..'
 alias bin='cd /usr/bin'
@@ -21,10 +25,11 @@ alias assets='cd ~/code/assets'
 alias trash='cd ~/.local/share/Trash/files'
 
 #git
+alias ga="git add"
 alias gc='git commit -m'
 alias gcv='git commit -v'
-alias push='git push origin'
-alias pull='git pull origin'
+alias pusho='git push origin'
+alias pullo='git pull origin'
 
 # npm
 alias publish='npm publish --access=public'

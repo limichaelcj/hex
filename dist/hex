@@ -12,22 +12,8 @@ source ~/.hex_files/.lib/data_helper
 source ~/.hex_files/.lib/terminal_helper
 # import terminal io functions
 source ~/.hex_files/.lib/terminal_io
-
-HEX="${TC_BPRP}@hex${TF_N}"
-CC="${TC_GRY}:${TC_PRP}"
-
-NAME="${TC_PRP}"
-CODE="${BG_DRK}${TC_CYN}"
-ARG="${TC_YLW}"
-
-INFO="${TC_BCYN}INFO:${TF_N} "
-WARN="${TC_BYLW}WARN:${TF_N} "
-ERROR="${TC_BRED}ERROR:${TF_N} "
-
-CREATE="> ${TC_BGRN}CREATE${TF_N} -- "
-SAVE="> ${TC_BBLU}SAVE${TF_N} -- "
-DELETE="> ${TC_BRED}DELETE${TF_N} -- "
-
+# import type styles
+source ~/.hex_files/.lib/type_style
 
 ############
 ### MAIN ###
@@ -184,7 +170,7 @@ generate() {
       local abs_path="$PWD/$user_path"
       local rel_path="$user_path"
     fi
-    local display_path="${TC_NAV}$(home_tilde $abs_path)${TF_N}"
+    local display_path="${FPATH}$(home_tilde $abs_path)${TF_N}"
     # abs_path= absolute path
     # rel_path= relative path from current working directory -- will be used to generate files
     # display_path= path to display when displaying info to user
@@ -214,7 +200,7 @@ favicon() {
       local abs_path="$PWD/$user_path"
       local rel_path="$user_path"
     fi
-    local display_path="${TC_NAV}$(home_tilde $abs_path)${TF_N}"
+    local display_path="${FPATH}$(home_tilde $abs_path)${TF_N}"
     echo -e "${INFO}Generating favicon: ${TC_SAG}$icon${TF_N}"
     cp -a ~/.hex_files/favicon/${icon}.ico $rel_path/favicon.ico
     echo -e "${CREATE}${NAME}favicon.ico${TF_N} written to $display_path"
@@ -228,7 +214,7 @@ favicon() {
 ### codes
 codes-list() {
   if [ ${#MAP[@]} -eq 0 ]; then
-    echo -e "${INFO}No codes saved. Run ${CODE} hex codes add ${ARG}<name> <value> ${TF_N} to save a code."
+    echo -e "${INFO}No codes saved. Run ${CODE} hex codes add ${PARAM}<name> <value> ${TF_N} to save a code."
   else
     print_map
   fi
@@ -238,11 +224,11 @@ codes-add() {
   # $1= key
   # $2= value
   if [ -z "$1" ] || [ -z "$2" ]; then
-    terminate "${HEX}${CC}codes${CC}add${TC_D} requires 2 arguments: key, value"
+    terminate "${HEX}${CC}codes${CC}add${TC_D} requires 2 arguments: ${PARAM}key${TC_D}, ${PARAM}value${TF_N}"
   else
     existing_map_key? $1
     if [ $? = 1 ]; then
-      terminate "${ERROR}${TC_BLU}$1${TC_D} key already exists."
+      terminate "${ERROR}${NAME}$1${TC_D} key already exists."
     fi
     # write key:value to codes file
     file_write_map_line $1 $2 ~/.hex_profile/codes
@@ -275,14 +261,14 @@ codes-clear() {
 ### dev
 dev-alias() {
   if [ -f ~/.aliasrc ]; then
-    confirm_strict "${WARN}${TC_NAV}~/.aliasrc${TF_N} will be overwritten. Continue?"
+    confirm_strict "${WARN}${FPATH}~/.aliasrc${TF_N} will be overwritten. Continue?"
   fi
   cp -a ~/.hex_files/dev/aliasrc ~/.aliasrc
-  echo -e "> ${TC_BGRN}.aliasrc${TF_N} written to ${TC_NAV}home${TF_N}"
+  echo -e "${CREATE}${NAME}.aliasrc${TF_N} written to ${FPATH}home${TF_N}"
   echo -e "${INFO}Installation follow-up instructions:"
-  echo -e "${TC_BWHT}1)${TF_N} Open your terminal's .rc file (e.g. ${TC_NAV}.bashrc${TF_N}, ${TC_NAV}.zshrc${TF_N}, etc.)."
+  echo -e "${TC_BWHT}1)${TF_N} Open your terminal's .rc file (e.g. ${NAME}.bashrc${TF_N}, ${NAME}.zshrc${TF_N}, etc.)."
   echo -e "${TC_BWHT}2)${TF_N} Add the following line of bash code unless already there:"
-  echo -e "   --> ${TC_YLW}[[ -f \"$HOME/.aliasrc\" ]] && source \"$HOME/.aliasrc\"${TF_N}"
+  echo -e "   ${CODE} [[ -f \"~/.aliasrc\" ]] && source \"~/.aliasrc\" ${TF_N}"
   echo -e "${TC_BWHT}3)${TF_N} Save .rc file and restart terminal."
   echo -e "   --  Or run the .rc file with ${CODE} . ~/.bashrc ${TF_N}"
 }
@@ -294,7 +280,7 @@ dev-webpack(){
   confirm_strict "${WARN}${HEX}${CC}dev${CC}webpack${TC_D} will install multiple npm packages. Continue?"
   npm install -D webpack webpack-cli @babel/core @babel/preset-env babel-loader css-loader sass-loader node-sass style-loader extract-loader file-loader extract-text-webpack-plugin
   cp -a ~/.hex_files/dev/webpack-template webpack.config.js
-  echo -e "${CREATE}${NAME}webpack.config.js${TF_N} written to ${TC_NAV}$PWD (here)${TF_N}"
+  echo -e "${CREATE}${NAME}webpack.config.js${TF_N} written to ${FPATH}$PWD (here)${TF_N}"
 }
 
 main "$@"

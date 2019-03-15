@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Flavor text
+HEX="${TC_ROY}@hex${TF_N}"
+CC="${TC_GRY}:${TC_PRP}"
+
+# Text Styles
+NAME="${TC_SAG}"
+DIR="${TC_BBLU}"
+CODE="${BG_DRK}${TC_GRN}"
+PARAM="${TC_YLW}"
+FPATH="${TC_NAV}"
+
+# Notices
+INFO="${TC_BCYN}INFO:${TF_N} "
+WARN="${TC_BYLW}WARN:${TF_N} "
+ERROR="${TC_BRED}ERROR:${TF_N} "
+
+# Actions
+CREATE="> ${TC_BGRN}CREATE${TF_N} -- "
+SAVE="> ${TC_BBLU}SAVE${TF_N} -- "
+DELETE="> ${TC_BRED}DELETE${TF_N} -- "
