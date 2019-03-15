@@ -7,6 +7,7 @@ echo "  Commands:"
 echo ''
 echo "   man,help | manual                        print script manual"
 echo "        sys | sysinfo                       display system info"
-echo "      g,gen | generate [operation] <path>   generate file tree templates"
-echo "       icon | favicon [icon]                generate favicon"
+echo "      d,dev | dev [operation]               install useful dev utilities"
+echo "      g,gen | generate [operation] <path>   generate file templates"
+echo "       icon | favicon [icon]                generate favicons"
 echo ''

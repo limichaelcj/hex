@@ -1,0 +1,58 @@
+#!/bin/bash
+
+### data management/parsing
+
+init_directory() {
+  if [ ! -d $1 ]; then
+    mkdir $1
+  fi
+}
+
+init_file() {
+  if [ ! -f $1 ]; then
+    touch $1
+  fi
+}
+
+is_int?() {
+  local regex='^-?[0-9]+$'
+  if [[ $1 =~ $regex ]]; then
+    return 1
+  else
+    return 0
+  fi
+  # boolean return saved to global var: $?
+}
+
+read_map() {
+  # $1= file to read
+  declare -gA MAP
+  while IFS='=' read -ra line; do
+    MAP[${line[0]}]="${line[1]}"
+  done < $1
+  unset IFS
+}
+
+existing_map_key?() {
+  # $1= key prompt
+  # return true/false as 1/0 => saved to global var: $?
+  for key in "${!MAP[@]}"; do
+    if [ "$1" = "$key" ]; then
+      return 1
+    fi
+  done
+  return 0
+}
+
+file_write_map_line() {
+  # $1= key
+  # $2= value
+  # $3= file
+  echo "$1=$2" >> $3
+}
+
+file_delete_map_line() {
+  # $1= key
+  # $2= file
+  sed -i "/^$1=/d" $2
+}

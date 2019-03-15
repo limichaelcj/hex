@@ -35,6 +35,25 @@ confirm_strict() {
 
 ### print styles
 
-# print_table(){
-#   # $1= array
-# }
+print_map() {
+  # uses global $MAP
+  # call read_map before calling this function
+  # $1= key color
+  # $2= value color
+  local KL=0 # Key string Length
+  local KC="${1:-${TC_BLU}}" # Key Color
+  local VC="${2:-${TC_D}}" # Value Color
+  # find longest string lengths for key names
+  for key in "${!MAP[@]}"; do
+    if [ ${#key} -gt $KL ]; then
+      KL=${#key}
+    fi
+  done
+  # print each key value pair as a line
+  for key in "${!MAP[@]}"; do
+    # get filler space - reference the $KL key length
+    local len=${#key}
+    fill $((KL-len)) # creates global $FILL
+    echo -e "  ${KC}${key}${TF_N}${TC_BGRY}${FILL} :: ${TF_N}${VC}${MAP[$key]}${TF_N}"
+  done
+}

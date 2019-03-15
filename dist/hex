@@ -1,11 +1,37 @@
 #!/bin/bash
 
+#############
+### SETUP ###
+#############
+
 # import typography variables
 source ~/.hex_files/.lib/typography
+# import data functions
+source ~/.hex_files/.lib/data_helper
 # import terminal helper functions
 source ~/.hex_files/.lib/terminal_helper
 # import terminal io functions
 source ~/.hex_files/.lib/terminal_io
+
+HEX="${TC_BPRP}@hex${TF_N}"
+CC="${TC_GRY}:${TC_PRP}"
+
+NAME="${TC_PRP}"
+CODE="${BG_DRK}${TC_CYN}"
+ARG="${TC_YLW}"
+
+INFO="${TC_BCYN}INFO:${TF_N} "
+WARN="${TC_BYLW}WARN:${TF_N} "
+ERROR="${TC_BRED}ERROR:${TF_N} "
+
+CREATE="> ${TC_BGRN}CREATE${TF_N} -- "
+SAVE="> ${TC_BBLU}SAVE${TF_N} -- "
+DELETE="> ${TC_BRED}DELETE${TF_N} -- "
+
+
+############
+### MAIN ###
+############
 
 main() {
   # if no arguments...
@@ -16,25 +42,38 @@ main() {
   fi
   # $1= hex command
   case $1 in
+    ### General manual page for hex
     manual|man|help)
       print_manual
       ;;
+    ### Function test: system information
     sysinfo|sys)
       sysinfo
       ;;
+    ### Reference useful information
     reference|ref)
       # $2= reference operation
       reference $2
       ;;
-    sdk)
-      # $2= sdk option
-      sdk $2
+    ### Keep a list of useful codes and information
+    codes|code)
+      # $2= code key
+      # $3= param1
+      # $4= param2
+      codes $2 $3 $4
       ;;
+    ### Install useful development utilities
+    dev)
+      # $2= dev option
+      dev $2
+      ;;
+    ### Generate copies of directories in .hex_files
     generate|gen|g)
       # $2= generate operation
       # $3= target filepath to generate in
       generate $2 $3
       ;;
+    ### Generate favicons
     favicon|icon)
       # $2= icon name
       # $3= target directory
@@ -45,6 +84,10 @@ main() {
       ;;
   esac
 }
+
+######################
+### MAIN FUNCTIONS ###
+######################
 
 script_info() {
   echo -e "${TC_ROY}HEX:${TF_N} Custom scripts by mcli830"
@@ -63,32 +106,63 @@ sysinfo() {
 }
 
 reference() {
+  # $1= reference file @ ~/.hex_files/.ref/...
   if [ -z "$1" ]; then
-    terminate "No reference given"
+    terminate "${ERROR}No reference given"
   fi
-  case $1 in
-    colors|color)
-      source ~/.hex_files/.ref/colors
-      ;;
-    *)
-      terminate "Invalid reference: $1"
-  esac
+  if [ -f ~/.hex_files/.ref/$1 ]; then
+    source ~/.hex_files/.ref/$1
+  else
+    terminate "${ERROR}Invalid reference: $1"
+  fi
 }
 
-sdk() {
-  local install="$1"
-  if [ -z "$install" ]; then
-    source ~/.hex_files/.ref/man/sdk
+codes() {
+  # $1= operation
+  init_directory ~/.hex_profile
+  init_file ~/.hex_profile/codes
+  read_map ~/.hex_profile/codes # Creates global $MAP
+  if [ -z "$1" ]; then
+    source ~/.hex_files/.ref/man/codes
   else
-    case $install in
-      alias)
-        sdk-alias
+    case $1 in
+      list|l)
+        codes-list
         ;;
-      webpack|webpack)
-        sdk-webpack
+      add|a)
+        # $2= key
+        # $3= value
+        codes-add $2 $3
+        ;;
+      delete|d)
+        # $2= key
+        codes-delete $2
+        ;;
+      clear|c)
+        codes-clear
         ;;
       *)
-        source ~/.hex_files/.ref/man/sdk
+        source ~/.hex_files/.ref/man/codes
+        ;;
+    esac
+  fi
+
+}
+
+dev() {
+  # $1= option
+  if [ -z "$1" ]; then
+    source ~/.hex_files/.ref/man/dev
+  else
+    case $1 in
+      alias)
+        dev-alias
+        ;;
+      webpack|webpack)
+        dev-webpack
+        ;;
+      *)
+        source ~/.hex_files/.ref/man/dev
         ;;
     esac
   fi
@@ -101,7 +175,7 @@ generate() {
     source ~/.hex_files/.ref/man/generate
   else
     if [ ! -d ~/.hex_files/generate/$operation ]; then
-      terminate "Invalid operation: $operation"
+      terminate "${ERROR}Invalid operation: $operation"
     fi
     if [ -z $user_path ]; then
       local abs_path="$PWD"
@@ -116,11 +190,11 @@ generate() {
     # display_path= path to display when displaying info to user
 
     # confirmation
-    confirm_strict "Some files in $display_path may be overwritten. Continue?"
+    confirm_strict "${WARN}Some files in $display_path may be overwritten. Continue?"
 
-    echo -e "Generating $operation files..."
+    echo -e "${INFO}Generating $operation files..."
     cp -a ~/.hex_files/generate/$operation/. $rel_path/
-    echo -e "> ${TC_BGRN}index.html${TF_N} written to $display_path"
+    echo -e "${CREATE}${NAME}index.html${TF_N} written to $display_path"
   fi
 }
 
@@ -131,7 +205,7 @@ favicon() {
     source ~/.hex_files/.ref/man/favicon
   else
     if [ ! -f ~/.hex_files/favicon/${icon}.ico ]; then
-      terminate "Invalid icon: $icon"
+      terminate "${ERROR}Invalid icon: $icon"
     fi
     if [ -z $user_path ]; then
       local abs_path="$PWD"
@@ -141,35 +215,86 @@ favicon() {
       local rel_path="$user_path"
     fi
     local display_path="${TC_NAV}$(home_tilde $abs_path)${TF_N}"
-    echo -e "Generating favicon: ${TC_SAG}$icon${TF_N}"
+    echo -e "${INFO}Generating favicon: ${TC_SAG}$icon${TF_N}"
     cp -a ~/.hex_files/favicon/${icon}.ico $rel_path/favicon.ico
-    echo -e "> ${TC_BGRN}favicon.ico${TF_N} written to $display_path"
+    echo -e "${CREATE}${NAME}favicon.ico${TF_N} written to $display_path"
   fi
 }
 
-# sub-functions
-sdk-alias(){
-  if [ -f ~/.aliasrc ]; then
-    confirm_strict "${TC_NAV}~/.aliasrc${TF_N} will be overwritten. Continue?"
+#####################
+### SUB-FUNCTIONS ###
+#####################
+
+### codes
+codes-list() {
+  if [ ${#MAP[@]} -eq 0 ]; then
+    echo -e "${INFO}No codes saved. Run ${CODE} hex codes add ${ARG}<name> <value> ${TF_N} to save a code."
+  else
+    print_map
   fi
-  cp -a ~/.hex_files/sdk/aliasrc ~/.aliasrc
+}
+
+codes-add() {
+  # $1= key
+  # $2= value
+  if [ -z "$1" ] || [ -z "$2" ]; then
+    terminate "${HEX}${CC}codes${CC}add${TC_D} requires 2 arguments: key, value"
+  else
+    existing_map_key? $1
+    if [ $? = 1 ]; then
+      terminate "${ERROR}${TC_BLU}$1${TC_D} key already exists."
+    fi
+    # write key:value to codes file
+    file_write_map_line $1 $2 ~/.hex_profile/codes
+    echo -e "${SAVE}Added ${NAME}$1${TF_N} to code list."
+  fi
+}
+
+codes-delete() {
+  # $1= key
+  if [ -z "$1" ]; then
+    terminate "${ERROR}No code key provided."
+  fi
+  existing_map_key? $1
+  if [ $? = 0 ]; then
+    terminate "${ERROR}${NAME}$1${TF_N} does not exist."
+  fi
+  # delete line with key in codes file
+  file_delete_map_line $1 ~/.hex_profile/codes
+  echo -e "${DELETE}Removed ${NAME}$1${TF_N} from code list."
+}
+
+codes-clear() {
+  confirm_strict "${WARN}Remove all keys from code list?"
+  for key in "${!MAP[@]}"; do
+    echo -e "${DELETE}Removed ${NAME}$key${TF_N} from code list."
+  done
+  > ~/.hex_profile/codes
+}
+
+### dev
+dev-alias() {
+  if [ -f ~/.aliasrc ]; then
+    confirm_strict "${WARN}${TC_NAV}~/.aliasrc${TF_N} will be overwritten. Continue?"
+  fi
+  cp -a ~/.hex_files/dev/aliasrc ~/.aliasrc
   echo -e "> ${TC_BGRN}.aliasrc${TF_N} written to ${TC_NAV}home${TF_N}"
-  echo -e 'Installation follow-up instructions:'
+  echo -e "${INFO}Installation follow-up instructions:"
   echo -e "${TC_BWHT}1)${TF_N} Open your terminal's .rc file (e.g. ${TC_NAV}.bashrc${TF_N}, ${TC_NAV}.zshrc${TF_N}, etc.)."
   echo -e "${TC_BWHT}2)${TF_N} Add the following line of bash code unless already there:"
   echo -e "   --> ${TC_YLW}[[ -f \"$HOME/.aliasrc\" ]] && source \"$HOME/.aliasrc\"${TF_N}"
   echo -e "${TC_BWHT}3)${TF_N} Save .rc file and restart terminal."
-  echo -e "   --  Or run the .rc file with ${TC_CYN}${BG_DRK} . ~/.bashrc ${TF_N}"
+  echo -e "   --  Or run the .rc file with ${CODE} . ~/.bashrc ${TF_N}"
 }
 
-sdk-webpack(){
+dev-webpack(){
   if [ ! -f package.json ]; then
-    terminate "${TC_BYLW}ABORT:${TF_N} npm package not found. Run ${TC_CYN}${BG_DRK} npm init ${TF_N} to create an npm package in this directory."
+    terminate "${INFO} npm package not found. Run ${CODE} npm init ${TF_N} to create an npm package in this directory."
   fi
-  confirm_strict "${TC_ROY}@hex${TF_N}:sdk:webpack${TF_N} will install multiple npm packages. Continue?"
+  confirm_strict "${WARN}${HEX}${CC}dev${CC}webpack${TC_D} will install multiple npm packages. Continue?"
   npm install -D webpack webpack-cli @babel/core @babel/preset-env babel-loader css-loader sass-loader node-sass style-loader extract-loader file-loader extract-text-webpack-plugin
-  cp -a ~/.hex_files/sdk/webpack-template webpack.config.js
-  echo -e "> ${TC_BGRN}webpack.config.js${TF_N} written to ${TC_NAV}$PWD (here)${TF_N}"
+  cp -a ~/.hex_files/dev/webpack-template webpack.config.js
+  echo -e "${CREATE}${NAME}webpack.config.js${TF_N} written to ${TC_NAV}$PWD (here)${TF_N}"
 }
 
 main "$@"

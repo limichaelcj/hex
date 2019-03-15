@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo ''
-echo "  Usage: hex sdk [installation]"
+echo "  Usage: hex dev [installation]"
 echo ''
 echo "  Installation options:"
 echo ''

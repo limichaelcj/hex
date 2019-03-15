@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo ''
+echo "  Usage: hex codes [operation]"
+echo ''
+echo "  Operations:"
+echo ''
+echo "    l | list                 List all saved codes"
+echo "    a | add <key> <value>    Add a code to the list"
+echo "    d | delete <key>         Delete a saved code"
+echo "    c | clear                Delete all saved codes"
+echo ''

@@ -14,32 +14,23 @@ terminate() {
   exit
 }
 
-### data
-
-is_int?() {
-  local regex='^-?[0-9]+$'
-  if [[ $1 =~ $regex ]]; then
-    return 1
-  else
-    return 0
-  fi
-}
+### display
 
 fill() {
-  # $1= character to fill with
-  # $2= length of filled string
+  # $1= length of filled string
+  # $2= character to fill with
   # local default_char=' '
   # local default_len=2
-  local char="${1:- }"
-  local len=${2:-2}
-  if [ $len -lt 2 ]; then
+  local len=$1
+  local char="${2:- }"
+  if [ -z "$len" ]; then
     len=2
   fi
   local out=''
   for ((n=0;n<$len;n++)); do
     out+="$char"
   done
-  echo $out
+  FILL=$out
 }
 
 home_tilde() {
