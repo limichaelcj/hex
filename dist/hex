@@ -261,10 +261,15 @@ codes-clear() {
 ### dev
 dev-alias() {
   if [ -f ~/.aliasrc ]; then
-    confirm_strict "${WARN}${FPATH}~/.aliasrc${TF_N} will be overwritten. Continue?"
+    continue? "${WARN}${FPATH}~/.aliasrc${TF_N} already exists. Overwrite?"
+    if [ $? = 1 ]; then
+      cp -a ~/.hex_files/dev/aliasrc ~/.aliasrc
+      echo -e "${CREATE}${NAME}.aliasrc${TF_N} written to ${FPATH}home${TF_N}"
+    fi
+  else
+    cp -a ~/.hex_files/dev/aliasrc ~/.aliasrc
+    echo -e "${CREATE}${NAME}.aliasrc${TF_N} written to ${FPATH}home${TF_N}"
   fi
-  cp -a ~/.hex_files/dev/aliasrc ~/.aliasrc
-  echo -e "${CREATE}${NAME}.aliasrc${TF_N} written to ${FPATH}home${TF_N}"
   echo -e "${INFO}Installation follow-up instructions:"
   echo -e "${TC_BWHT}1)${TF_N} Open your terminal's .rc file (e.g. ${NAME}.bashrc${TF_N}, ${NAME}.zshrc${TF_N}, etc.)."
   echo -e "${TC_BWHT}2)${TF_N} Add the following line of bash code unless already there:"

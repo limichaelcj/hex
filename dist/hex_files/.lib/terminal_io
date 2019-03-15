@@ -33,6 +33,21 @@ confirm_strict() {
   return 1
 }
 
+continue?() {
+  # $1= confirmation message
+  if [ -z "$1" ]; then
+    local message="Confirm?"
+  else
+    local message="$1"
+  fi
+  echo -ne "$message [y/n]: "
+  read yn
+  if [[ $yn != [Yy] ]]; then
+    return 0
+  fi
+  return 1
+}
+
 ### print styles
 
 print_map() {
