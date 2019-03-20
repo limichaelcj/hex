@@ -178,9 +178,8 @@ generate() {
     # confirmation
     confirm_strict "${WARN}Some files in $display_path may be overwritten. Continue?"
 
-    echo -e "${INFO}Generating $operation files..."
     cp -a ~/.hex_files/generate/$operation/. $rel_path/
-    echo -e "${CREATE}${NAME}index.html${TF_N} written to $display_path"
+    echo -e "${CREATE}${NAME}$operation${TF_N} files generated in $display_path"
   fi
 }
 
