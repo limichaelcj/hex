@@ -156,30 +156,10 @@ dev() {
 
 generate() {
   local operation="$1"
-  local user_path="$2"
   if [ -z "$operation" ]; then
     source ~/.hex_files/.ref/man/generate
   else
-    if [ ! -d ~/.hex_files/generate/$operation ]; then
-      terminate "${ERROR}Invalid operation: $operation"
-    fi
-    if [ -z $user_path ]; then
-      local abs_path="$PWD"
-      local rel_path='.'
-    else
-      local abs_path="$PWD/$user_path"
-      local rel_path="$user_path"
-    fi
-    local display_path="${FPATH}$(home_tilde $abs_path)${TF_N}"
-    # abs_path= absolute path
-    # rel_path= relative path from current working directory -- will be used to generate files
-    # display_path= path to display when displaying info to user
-
-    # confirmation
-    confirm_strict "${WARN}Some files in $display_path may be overwritten. Continue?"
-
-    cp -a ~/.hex_files/generate/$operation/. $rel_path/
-    echo -e "${CREATE}${NAME}$operation${TF_N} files generated in $display_path"
+    generate-static $operation $2
   fi
 }
 
@@ -285,6 +265,32 @@ dev-webpack(){
   npm install -D webpack webpack-cli @babel/core @babel/preset-env babel-loader css-loader sass-loader node-sass style-loader extract-loader file-loader extract-text-webpack-plugin
   cp -a ~/.hex_files/dev/webpack-template webpack.config.js
   echo -e "${CREATE}${NAME}webpack.config.js${TF_N} written to ${FPATH}$PWD (here)${TF_N}"
+}
+
+### generate
+generate-static() {
+  local operation="$1"
+  local user_path="$2"
+  if [ ! -d ~/.hex_files/generate/$operation ]; then
+    terminate "${ERROR}Invalid operation: $operation"
+  fi
+  if [ -z $user_path ]; then
+    local abs_path="$PWD"
+    local rel_path='.'
+  else
+    local abs_path="$PWD/$user_path"
+    local rel_path="$user_path"
+  fi
+  local display_path="${FPATH}$(home_tilde $abs_path)${TF_N}"
+  # abs_path= absolute path
+  # rel_path= relative path from current working directory -- will be used to generate files
+  # display_path= path to display when displaying info to user
+
+  # confirmation
+  confirm_strict "${WARN}Some files in $display_path may be overwritten. Continue?"
+
+  cp -a ~/.hex_files/generate/$operation/. $rel_path/
+  echo -e "${CREATE}${NAME}$operation${TF_N} files generated in $display_path"
 }
 
 main "$@"
