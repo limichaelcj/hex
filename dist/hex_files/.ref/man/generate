@@ -6,6 +6,7 @@ echo ''
 echo "  Operations:"
 echo ''
 echo "    html-compatible <path>   basic html compatibility template"
+echo "    pug-compatible <path>    basic pug compatibility template"
 echo "    scss-tree <path>         general .scss file tree template"
 echo "    material-colors <path>   .scss variables file for material colors"
 echo ''
