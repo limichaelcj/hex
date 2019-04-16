@@ -5,10 +5,9 @@ echo "  Usage: hex generate [operation] <path>"
 echo ''
 echo "  Operations:"
 echo ''
-echo "    html-compatible        basic html compatibility template"
-echo "    pug-compatible         a basic pug compatibility template"
-echo "    scss-tree              general .scss file tree template"
-echo "    material-colors        .scss variables file for material colors"
+echo "    html-meta              basic html skeleton with compatibility meta tags"
+echo "    pug-meta               basic pug layout with compatibility meta tags"
+echo "    scss-tree              scss file tree template (inc. material-colors)"
+echo "    material-colors        scss variables file for material colors"
 echo "    express-boilerplate    express.js app preconfigured with mongoose, passport, and socket.io"
 echo ''
-po
