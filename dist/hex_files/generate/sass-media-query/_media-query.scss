@@ -52,7 +52,7 @@ $device-breakpoints: 600px 768px 992px 1200px;
 // This mixin does not provide the base css rule.
 // Rule values will use last index if user-defined
 // list is too short.
-@mixin mediaQueryStep($rules, $delay) {
+@mixin mediaQueryStep($rules, $delay: 0) {
   @each $device in $device-breakpoints {
     $index: index($device-breakpoints, $device) - $delay;
     @if $index > 0 {
