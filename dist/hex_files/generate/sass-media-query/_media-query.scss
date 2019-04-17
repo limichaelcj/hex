@@ -1,0 +1,46 @@
+$device-breakpoints: 600px 768px 992px 1200px;
+
+@mixin mediaQueryRange($rules, $delay: 0) {
+  @if (type-of($rules) == map and $delay < 4) {
+    $breaks: 4 - $delay;
+    @each $attr, $range in $rules {
+      #{$attr}: nth($range, 1);
+    }
+    @each $device in $device-breakpoints {
+      $index: index($device-breakpoints, $device) - $delay;
+      @if $index > 0 {
+        @media only screen and (min-width: $device) {
+          @each $attr, $range in $rules {
+            $base: nth($range, 1);
+            $final: nth($range, length($range));
+            $delta: ($final - $base) / $breaks;
+            #{$attr}: $base + ($delta * $index);
+          }
+        }
+      }
+    }
+  } @else {
+    @warn '@mixin:mediaQueryRange: bad arguments';
+  }
+}
+
+@mixin mediaQueryStep($rules, $delay) {
+  @if (type-of($rules) == map and $delay < 4) {
+    @each $device in $device-breakpoints {
+      $index: index($device-breakpoints, $device) - $delay;
+      @if $index > 0 {
+        @media only screen and (min-width: $device){
+          @each $attr, $values in $rules {
+            @if $index > length($values) {
+              #{$attr}: nth($values, length($values));
+            } @else {
+              #{$attr}: nth($values, $index);
+            }
+          }
+        }
+      }
+    }
+  } @else {
+    @warn '@mixin:mediaQueryStep: bad arguments';
+  }
+}

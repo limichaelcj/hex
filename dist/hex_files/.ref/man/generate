@@ -8,6 +8,7 @@ echo ''
 echo "    html-meta              basic html skeleton with compatibility meta tags"
 echo "    pug-meta               basic pug layout with compatibility meta tags"
 echo "    scss-tree              scss file tree template (inc. material-colors)"
+echo "    sass-media-query       sass mixins to quickly write media queries"
 echo "    material-colors        scss variables file for material colors"
 echo "    express-boilerplate    express.js app preconfigured with mongoose, passport, and socket.io"
 echo ''
